@@ -1,12 +1,20 @@
 package com.nitin.studies.empmgmt.services.v1;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nitin.studies.empmgmt.dao.DepartmentRepository;
 import com.nitin.studies.empmgmt.dao.EmployeeRepository;
+import com.nitin.studies.empmgmt.data.Department;
 import com.nitin.studies.empmgmt.data.Employee;
+import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
+import com.nitin.studies.empmgmt.dto.EmpRequestDTO;
+import com.nitin.studies.empmgmt.dto.EmpResponseDTO;
+import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 
 @Service
 public final class EmployeeService {
@@ -14,20 +22,47 @@ public final class EmployeeService {
 	@Autowired
 	private EmployeeRepository repository;
 
-	public Collection<Employee> retrieveAllEmployees() {
-		return repository.findAll();
+	@Autowired
+	private DepartmentRepository deptRepository;
+
+	public Collection<EmpResponseDTO> retrieveAllEmployees() {
+		return repository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
 	}
 
-	public boolean deleteEmployee(final long userId) {
+	public boolean deleteEmployee(final long id) {
 		boolean isDeleted = false;
-		if (repository.existsById(userId)) {
-			repository.deleteById(userId);
+		if (repository.existsById(id)) {
+			repository.deleteById(id);
 			isDeleted = true;
 		}
 		return isDeleted;
 	}
 
-	public Employee createEmployee(final Employee user) {
-		return repository.save(user);
+	public EmpResponseDTO createEmployee(final EmpRequestDTO requestDto) {
+		return mapToDto(repository.save(mapToDomain(requestDto)));
+	}
+
+	private Employee mapToDomain(final EmpRequestDTO requestDto) {
+		Objects.requireNonNull(requestDto, "RequestDTO must be initialized");
+		Long departmentId = requestDto.getDepartmentId();
+		Department department = deptRepository.findById(departmentId).orElseThrow(
+				() -> new EntityNotFoundException(String.format("Department with id {%d} not found", departmentId)));
+		return new Employee(requestDto.getFirstName(), requestDto.getLastName(), department);
+	}
+
+	private DeptResponseDTO mapToDto(final Department domain) {
+		DeptResponseDTO responseObject = new DeptResponseDTO();
+		responseObject.setId(domain.getId());
+		responseObject.setName(domain.getName());
+		return responseObject;
+	}
+
+	private EmpResponseDTO mapToDto(final Employee domain) {
+		EmpResponseDTO responseObject = new EmpResponseDTO();
+		responseObject.setId(domain.getId());
+		responseObject.setFirstName(domain.getFirstName());
+		responseObject.setLastName(domain.getLastName());
+		responseObject.setDepartment(mapToDto(domain.getDepartment()));
+		return responseObject;
 	}
 }

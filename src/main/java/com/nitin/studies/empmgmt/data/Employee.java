@@ -31,11 +31,10 @@ public class Employee {
 	protected Employee() {
 	}
 
-	public Employee(long id, String firstName, String lastName) {
-		super();
-		this.id = id;
+	public Employee(String firstName, String lastName, Department department) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.department = department;
 	}
 
 	public long getId() {

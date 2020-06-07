@@ -19,9 +19,7 @@ public class Department {
 	protected Department() {
 	}
 
-	public Department(long id, String name) {
-		super();
-		this.id = id;
+	public Department(String name) {
 		this.name = name;
 	}
 

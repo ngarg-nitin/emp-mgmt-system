@@ -1,12 +1,16 @@
 package com.nitin.studies.empmgmt.services.v1;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nitin.studies.empmgmt.dao.DepartmentRepository;
 import com.nitin.studies.empmgmt.data.Department;
+import com.nitin.studies.empmgmt.dto.DeptRequestDTO;
+import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
 
 @Service
 public final class DepartmentService {
@@ -14,21 +18,33 @@ public final class DepartmentService {
 	@Autowired
 	private DepartmentRepository repository;
 
-	public Collection<Department> retrieveAllDepartments() {
-		return repository.findAll();
+	public Collection<DeptResponseDTO> retrieveAllDepartments() {
+		return repository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
 	}
 
-	public boolean deleteDepartment(final long departmentId) {
+	public boolean deleteDepartment(final long id) {
 		boolean isDeleted = false;
-		if (repository.existsById(departmentId)) {
-			repository.deleteById(departmentId);
+		if (repository.existsById(id)) {
+			repository.deleteById(id);
 			isDeleted = true;
 		}
 		return isDeleted;
 	}
 
-	public Department createDepartment(final Department department) {
-		return repository.save(department);
+	public DeptResponseDTO createDepartment(final DeptRequestDTO requestDto) {
+		return mapToDto(repository.save(mapToDomain(requestDto)));
+	}
+
+	private Department mapToDomain(final DeptRequestDTO requestDto) {
+		Objects.requireNonNull(requestDto, "RequestDTO must be initialized");
+		return new Department(requestDto.getName());
+	}
+
+	private DeptResponseDTO mapToDto(final Department domain) {
+		DeptResponseDTO responseObject = new DeptResponseDTO();
+		responseObject.setId(domain.getId());
+		responseObject.setName(domain.getName());
+		return responseObject;
 	}
 
 }

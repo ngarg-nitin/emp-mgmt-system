@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.nitin.studies.empmgmt.data.Employee;
+import com.nitin.studies.empmgmt.dto.EmpRequestDTO;
+import com.nitin.studies.empmgmt.dto.EmpResponseDTO;
 import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.EmployeeService;
 
@@ -26,7 +27,7 @@ public final class EmployeeController {
 	private EmployeeService service;
 
 	@GetMapping
-	public Collection<Employee> retrieveAllEmployees() {
+	public Collection<EmpResponseDTO> retrieveAllEmployees() {
 		return service.retrieveAllEmployees();
 	}
 
@@ -39,10 +40,11 @@ public final class EmployeeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Employee> addUser(@RequestBody Employee employee) {
-		Employee createdEmployee = service.createEmployee(employee);
+	public ResponseEntity<EmpResponseDTO> addUser(@RequestBody EmpRequestDTO employee) {
+		EmpResponseDTO createdEmployee = service.createEmployee(employee);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdEmployee.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
+
 }

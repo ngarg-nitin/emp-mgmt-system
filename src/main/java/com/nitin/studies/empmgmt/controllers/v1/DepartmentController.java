@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.nitin.studies.empmgmt.data.Department;
+import com.nitin.studies.empmgmt.dto.DeptRequestDTO;
+import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
 import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.DepartmentService;
 
@@ -26,7 +27,7 @@ public final class DepartmentController {
 	private DepartmentService service;
 
 	@GetMapping
-	public Collection<Department> retrieveAllDepartments() {
+	public Collection<DeptResponseDTO> retrieveAllDepartments() {
 		return service.retrieveAllDepartments();
 	}
 
@@ -39,8 +40,8 @@ public final class DepartmentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
-		Department createdDept = service.createDepartment(department);
+	public ResponseEntity<DeptResponseDTO> addDepartment(@RequestBody DeptRequestDTO department) {
+		DeptResponseDTO createdDept = service.createDepartment(department);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdDept.getId()).toUri();
 		return ResponseEntity.created(location).build();
