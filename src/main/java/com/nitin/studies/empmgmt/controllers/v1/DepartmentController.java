@@ -19,7 +19,7 @@ import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.DepartmentService;
 
 @RestController
-@RequestMapping("/v1/departments")
+@RequestMapping("/api/v1/departments")
 public final class DepartmentController {
 
 	@Autowired

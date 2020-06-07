@@ -19,7 +19,7 @@ import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.EmployeeService;
 
 @RestController
-@RequestMapping("/v1/employees")
+@RequestMapping("/api/v1/employees")
 public final class EmployeeController {
 
 	@Autowired
