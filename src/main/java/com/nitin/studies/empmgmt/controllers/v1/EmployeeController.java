@@ -19,6 +19,10 @@ import com.nitin.studies.empmgmt.dto.EmpResponseDTO;
 import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.EmployeeService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "Controller for empployee operations")
 @RestController
 @RequestMapping("/api/v1/employees")
 public final class EmployeeController {
@@ -26,11 +30,13 @@ public final class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
+	@ApiOperation(value = "Get all employees", notes= "These are some implementation notes")
 	@GetMapping
 	public Collection<EmpResponseDTO> retrieveAllEmployees() {
 		return service.retrieveAllEmployees();
 	}
 
+	@ApiOperation(value = "Delete an employee", notes= "These are some implementation notes")
 	@DeleteMapping("/{id}")
 	public void removeEmployee(@PathVariable long id) {
 		boolean isDeleted = service.deleteEmployee(id);
@@ -39,8 +45,9 @@ public final class EmployeeController {
 		}
 	}
 
+	@ApiOperation(value = "Create new employee", notes= "These are some implementation notes")
 	@PostMapping
-	public ResponseEntity<EmpResponseDTO> addUser(@RequestBody EmpRequestDTO employee) {
+	public ResponseEntity<EmpResponseDTO> addEmployee(@RequestBody EmpRequestDTO employee) {
 		EmpResponseDTO createdEmployee = service.createEmployee(employee);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdEmployee.getId()).toUri();

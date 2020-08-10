@@ -1,5 +1,7 @@
 package com.nitin.studies.empmgmt.dto;
 
+import io.swagger.annotations.ApiModel;
+@ApiModel(description = "Response object for Department creation")
 public class DeptResponseDTO {
 
 	private long id;

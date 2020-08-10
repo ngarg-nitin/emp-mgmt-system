@@ -19,6 +19,10 @@ import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
 import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 import com.nitin.studies.empmgmt.services.v1.DepartmentService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "Controller for department operations")
 @RestController
 @RequestMapping("/api/v1/departments")
 public final class DepartmentController {
@@ -26,11 +30,14 @@ public final class DepartmentController {
 	@Autowired
 	private DepartmentService service;
 
+	@ApiOperation(value = "Get all departments", notes= "These are some implementation notes")
 	@GetMapping
 	public Collection<DeptResponseDTO> retrieveAllDepartments() {
 		return service.retrieveAllDepartments();
 	}
 
+
+	@ApiOperation(value = "Delete a department by Id", notes= "These are some implementation notes")
 	@DeleteMapping("/{id}")
 	public void removeDepartment(@PathVariable long id) {
 		boolean isDeleted = service.deleteDepartment(id);
@@ -39,6 +46,8 @@ public final class DepartmentController {
 		}
 	}
 
+
+	@ApiOperation(value = "Create a new department", notes= "These are some implementation notes")
 	@PostMapping
 	public ResponseEntity<DeptResponseDTO> addDepartment(@RequestBody DeptRequestDTO department) {
 		DeptResponseDTO createdDept = service.createDepartment(department);

@@ -1,5 +1,8 @@
 package com.nitin.studies.empmgmt.dto;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "Response object for Employee creation")
 public final class EmpResponseDTO {
 
 	private long id;
