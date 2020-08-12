@@ -1,25 +1,23 @@
 package com.nitin.studies.empmgmt.security;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-
-public class APIKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
-
-	private String principalRequestHeader;
-
-	protected APIKeyAuthFilter(final String principalRequestHeader) {
-		this.principalRequestHeader = principalRequestHeader;
-	}
-
-	@Override
-	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-		return request.getHeader(principalRequestHeader);
-	}
-
-	@Override
-	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-		return "N/A";
-	}
+public class APIKeyAuthFilter{
+	
+//public class APIKeyAuthFilter extends AbstractPreAuthenticatedProcessingFilter {
+//
+//	private String principalRequestHeader;
+//
+//	protected APIKeyAuthFilter(final String principalRequestHeader) {
+//		this.principalRequestHeader = principalRequestHeader;
+//	}
+//
+//	@Override
+//	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
+//		return request.getHeader(principalRequestHeader);
+//	}
+//
+//	@Override
+//	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
+//		return "N/A";
+//	}
 
 }

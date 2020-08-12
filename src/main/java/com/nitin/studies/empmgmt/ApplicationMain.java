@@ -21,13 +21,13 @@ public class ApplicationMain {
 		SpringApplication.run(ApplicationMain.class, args);
 	}
 
-	@Bean
-	CommandLineRunner populateAPIToken(final APITokenRepository tokenRepo) {
-
-		CommandLineRunner runner = (String[] args) -> {
-			tokenValues.stream().map(APIToken::new).forEach(tokenRepo::save);
-		};
-		return runner;
-	}
+//	@Bean
+//	CommandLineRunner populateAPIToken(final APITokenRepository tokenRepo) {
+//
+//		CommandLineRunner runner = (String[] args) -> {
+//			tokenValues.stream().map(APIToken::new).forEach(tokenRepo::save);
+//		};
+//		return runner;
+//	}
 
 }

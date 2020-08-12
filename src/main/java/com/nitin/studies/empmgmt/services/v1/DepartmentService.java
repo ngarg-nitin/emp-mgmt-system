@@ -13,7 +13,7 @@ import com.nitin.studies.empmgmt.dto.DeptRequestDTO;
 import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
 
 @Service
-public final class DepartmentService {
+public class DepartmentService {
 
 	@Autowired
 	private DepartmentRepository repository;
