@@ -84,7 +84,7 @@ class EmployeeControllerTest {
 		given(employeeService.retrieveAllEmployees()).willReturn(existingEmps);
 
 		mockMvc.perform(get("/api/v1/employees")).andExpect(status().isOk())
-				.andDo(document("v1/emp-all",
+				.andDo(document("v1/emp-all",preprocessResponse(prettyPrint()),
 						responseFields(fieldWithPath("[].id").description("Employee Id").type(long.class),
 								fieldWithPath("[].firstName").description("Emp's First Name"),
 								fieldWithPath("[].lastName").description("Emp's Last Name"),

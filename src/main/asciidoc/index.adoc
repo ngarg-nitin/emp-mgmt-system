@@ -1,53 +1,150 @@
-= Emp Mgmt System REST Docs
+= Employee Management System RESTful API Docs
+Nitin Garg <ngarg.nitin@gmail.com>
+v1.0, 15.08.2020: First Draft
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
 
-Sample application demonstrating how to use Spring REST Docs with JUnit 5.
+[[overview]]
+= Overview
 
-`DepartmentControllerTest` makes a call to a very simple service and produces three
-documentation snippets.
+[[overview-http-verbs]]
+== HTTP verbs
 
-GET All Departments
+RESTful EMS tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP verbs.
 
-One showing how to make a request using cURL:
+|===
+| Verb | Usage
 
-include::{snippets}/v1/dept-all/curl-request.adoc[]
+| `GET`
+| Used to retrieve a resource
 
-One showing the HTTP request:
+| `POST`
+| Used to create a new resource
+
+| `PATCH`
+| Used to update an existing resource, including partial updates
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+RESTful EMS tries to adhere as closely as possible to standard HTTP and REST conventions in its
+use of HTTP status codes.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+
+| `201 Created`
+| A new resource has been created successfully. The resource's URI is available from the response's
+`Location` header
+
+| `204 No Content`
+| An update to an existing resource has been applied successfully
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `404 Not Found`
+| The requested resource did not exist
+|===
+
+[[overview-hypermedia]]
+== Hypermedia
+
+RESTful EMS uses hypermedia and resources include links to other resources in their
+responses. Responses are in http://stateless.co/hal_specification.html[Hypertext Application
+from resource to resource.
+Language (HAL)] format. Links can be found beneath the `_links` key. Users of the API should
+not create URIs themselves, instead they should use the above-described links to navigate
+
+[[resources]]
+= Resources
+
+[[resources-department]]
+== Department
+
+[[resources-all-department-access]]
+=== Accessing the departments
+
+A 'GET' request is used to access all departments
+
+==== Request structure
 
 include::{snippets}/v1/dept-all/http-request.adoc[]
 
-And one showing the HTTP response:
+==== Response structure
 
 include::{snippets}/v1/dept-all/http-response.adoc[]
 
-Response Body:
+==== Example response body
+
 include::{snippets}/v1/dept-all/response-body.adoc[]
 
-Response Fields:
+==== Response Fields
+
 include::{snippets}/v1/dept-all/response-fields.adoc[]
 
+==== cURL request
 
-`EmployeeControllerTest` makes a call to a very simple service and produces three
-documentation snippets.
+include::{snippets}/v1/dept-all/curl-request.adoc[]
 
-GET All Employees
+[[resources-specific-department-access]]
+=== Accessing a specific department
 
-One showing how to make a request using cURL:
+A 'GET' request is used to access a department by it's id
 
-include::{snippets}/v1/emp-all/curl-request.adoc[]
+==== Request structure
 
-One showing the HTTP request:
+include::{snippets}/v1/dept-get/http-request.adoc[]
+
+==== Response structure
+
+include::{snippets}/v1/dept-get/http-response.adoc[]
+
+==== Example response body
+
+include::{snippets}/v1/dept-get/response-body.adoc[]
+
+==== Response Fields
+
+include::{snippets}/v1/dept-get/response-fields.adoc[]
+
+==== cURL request
+
+include::{snippets}/v1/dept-get/curl-request.adoc[]
+
+[[resources-employee]]
+== Employee
+
+[[resources-all-employee-access]]
+=== Accessing the employees
+
+A 'GET' request is used to access all employees
+
+==== Request structure
 
 include::{snippets}/v1/emp-all/http-request.adoc[]
 
-And one showing the HTTP response:
+==== Response structure
 
 include::{snippets}/v1/emp-all/http-response.adoc[]
 
-Response Body:
+==== Example response body
+
 include::{snippets}/v1/emp-all/response-body.adoc[]
 
-Response Fields:
+==== Response Fields
+
 include::{snippets}/v1/emp-all/response-fields.adoc[]
+
+==== cURL request
+
+include::{snippets}/v1/emp-all/curl-request.adoc[]

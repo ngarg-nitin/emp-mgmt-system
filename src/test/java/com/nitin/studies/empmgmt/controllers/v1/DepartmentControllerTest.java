@@ -1,16 +1,22 @@
 package com.nitin.studies.empmgmt.controllers.v1;
 
 import static java.util.Arrays.asList;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -42,7 +48,7 @@ class DepartmentControllerTest {
 	@MockBean
 	DepartmentService departmentService;
 
-	Collection<DeptResponseDTO> existingDepts = new ArrayList<>();
+	List<DeptResponseDTO> existingDepts = new ArrayList<>();
 
 	@BeforeEach
 	public void setUp() {
@@ -63,25 +69,34 @@ class DepartmentControllerTest {
 //	}
 
 	@Test
+	@Disabled
 	void getAllDepartmentsDefault() throws Exception {
 		given(departmentService.retrieveAllDepartments()).willReturn(existingDepts);
 
-		mockMvc.perform(get("/api/v1/departments")).andExpect(status().isOk()).andDo(document("v1/dept-all"));
+		mockMvc.perform(get("/api/v1/departments")).andExpect(status().isOk())
+				.andDo(document("v1/dept-all", preprocessResponse(prettyPrint())));
 	}
 
 	@Test
-	@Disabled
 	void getAllDepartmentsDocumentAllResponses() throws Exception {
 		given(departmentService.retrieveAllDepartments()).willReturn(existingDepts);
 
 		mockMvc.perform(get("/api/v1/departments")).andExpect(status().isOk())
-				.andDo(document("v1/dept-all",
+				.andDo(document("v1/dept-all", preprocessResponse(prettyPrint()),
 						responseFields(fieldWithPath("[].id").description("Id of Dept").type(long.class),
 								fieldWithPath("[].name").description("Department Name"))));
 	}
 
 	@Test
-	void addDepartment() throws Exception {
+	void getDepartmentById() throws Exception {
+		given(departmentService.retrieveDepartment(anyLong())).willReturn(existingDepts.get(0));
+
+		mockMvc.perform(get("/api/v1/departments/{id}", existingDepts.get(0).getId())).andExpect(status().isOk())
+				.andDo(document("v1/dept-get", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint()),
+						pathParameters(parameterWithName("id").description("Department's Id")),
+						responseFields(fieldWithPath("id").description("Department Id").type(long.class),
+								fieldWithPath("name").description("Department Name"))));
+
 	}
 
 	private static class ConstrainedFields {

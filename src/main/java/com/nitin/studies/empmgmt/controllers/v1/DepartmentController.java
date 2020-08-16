@@ -31,6 +31,11 @@ public final class DepartmentController {
 		return service.retrieveAllDepartments();
 	}
 
+	@GetMapping("/{id}")
+	public DeptResponseDTO retrieveDepartment(@PathVariable long id) {
+		return service.retrieveDepartment(id);
+	}
+
 	@DeleteMapping("/{id}")
 	public void removeDepartment(@PathVariable long id) {
 		boolean isDeleted = service.deleteDepartment(id);

@@ -11,6 +11,7 @@ import com.nitin.studies.empmgmt.dao.DepartmentRepository;
 import com.nitin.studies.empmgmt.data.Department;
 import com.nitin.studies.empmgmt.dto.DeptRequestDTO;
 import com.nitin.studies.empmgmt.dto.DeptResponseDTO;
+import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 
 @Service
 public class DepartmentService {
@@ -20,6 +21,11 @@ public class DepartmentService {
 
 	public Collection<DeptResponseDTO> retrieveAllDepartments() {
 		return repository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+	}
+
+	public DeptResponseDTO retrieveDepartment(final long id) {
+		return repository.findById(id).map(domain -> mapToDto(domain)).orElseThrow(
+				() -> new EntityNotFoundException(String.format("Department with id{%d} doesnot exist", id)));
 	}
 
 	public boolean deleteDepartment(final long id) {
