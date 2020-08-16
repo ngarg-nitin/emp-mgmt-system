@@ -1,5 +1,10 @@
 package com.nitin.studies.empmgmt.dto;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public final class EmpResponseDTO {
 
 	private long id;
@@ -9,37 +14,4 @@ public final class EmpResponseDTO {
 	private String lastName;
 
 	private DeptResponseDTO department;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public DeptResponseDTO getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(DeptResponseDTO department) {
-		this.department = department;
-	}
-
 }

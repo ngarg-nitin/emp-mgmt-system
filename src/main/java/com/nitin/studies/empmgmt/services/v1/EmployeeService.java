@@ -17,7 +17,7 @@ import com.nitin.studies.empmgmt.dto.EmpResponseDTO;
 import com.nitin.studies.empmgmt.exceptions.EntityNotFoundException;
 
 @Service
-public final class EmployeeService {
+public class EmployeeService {
 
 	@Autowired
 	private EmployeeRepository repository;
@@ -51,18 +51,13 @@ public final class EmployeeService {
 	}
 
 	private DeptResponseDTO mapToDto(final Department domain) {
-		DeptResponseDTO responseObject = new DeptResponseDTO();
-		responseObject.setId(domain.getId());
-		responseObject.setName(domain.getName());
+		DeptResponseDTO responseObject = DeptResponseDTO.builder().id(domain.getId()).name(domain.getName()).build();
 		return responseObject;
 	}
 
 	private EmpResponseDTO mapToDto(final Employee domain) {
-		EmpResponseDTO responseObject = new EmpResponseDTO();
-		responseObject.setId(domain.getId());
-		responseObject.setFirstName(domain.getFirstName());
-		responseObject.setLastName(domain.getLastName());
-		responseObject.setDepartment(mapToDto(domain.getDepartment()));
+		EmpResponseDTO responseObject = EmpResponseDTO.builder().id(domain.getId()).firstName(domain.getFirstName())
+				.lastName(domain.getLastName()).department(mapToDto(domain.getDepartment())).build();
 		return responseObject;
 	}
 }

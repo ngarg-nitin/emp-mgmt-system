@@ -1,5 +1,10 @@
 package com.nitin.studies.empmgmt.dto;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public final class EmpRequestDTO {
 
 	private String firstName;
@@ -7,29 +12,4 @@ public final class EmpRequestDTO {
 	private String lastName;
 
 	private long departmentId;
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public long getDepartmentId() {
-		return departmentId;
-	}
-
-	public void setDepartmentId(long departmentId) {
-		this.departmentId = departmentId;
-	}
-
 }

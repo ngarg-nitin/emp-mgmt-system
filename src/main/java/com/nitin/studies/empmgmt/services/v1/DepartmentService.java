@@ -41,9 +41,7 @@ public class DepartmentService {
 	}
 
 	private DeptResponseDTO mapToDto(final Department domain) {
-		DeptResponseDTO responseObject = new DeptResponseDTO();
-		responseObject.setId(domain.getId());
-		responseObject.setName(domain.getName());
+		DeptResponseDTO responseObject = DeptResponseDTO.builder().id(domain.getId()).name(domain.getName()).build();
 		return responseObject;
 	}
 
